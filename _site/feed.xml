@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Snow</title>
+    <description>Jekyll-powered blog template by Jon Cuevas</description>
+    <link>/</link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>Bulalo</title>
+        <description>
+          
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit non mi porta gravida at eget metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit non mi porta gravida at eget metus.
+
+
+        </description>
+        <pubDate>Fri, 01 Jan 2016 00:00:00 +0800</pubDate>
+        <link>/bulalo/</link>
+        <guid isPermaLink="true">/bulalo/</guid>
+      </item>
+    
+  </channel>
+</rss>

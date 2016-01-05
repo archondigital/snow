@@ -1,0 +1,4 @@
+# ads and disqus
+enable_disqus: false
+enable_adsense: false
+enable_analytics: false

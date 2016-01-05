@@ -1,0 +1,30 @@
+<div id="masthead" class="fullscreen">
+	<ul class="example-orbit" data-orbit data-options="bullets: false; navigation_arrows: true; slide_number: false;">
+	{% for post in site.posts %}
+		{% if post.featured == true %}
+		{% capture count %}{{ count | plus: '3' }}{% endcapture %}
+		{% if count >= '1' %}
+	
+		<li>
+			<div class="orbit-slide" style="background-image: url({{ post.featured_image | prepend: site.baseurl }});"></div>
+			<div class="orbit-caption">
+				<div class="row">
+					<div class="large-5 columns large-push-1 text-right">
+						<h6>Featured Content</h6>
+						<h3><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}{% if post.title_secondary %}<br><span class="label secondary t50">{{ post.title_secondary }}</span>{% endif %}</a></h3>
+					</div>
+					<div class="large-6 columns">
+						<p class="hide-for-small">{{ post.excerpt | remove: '<p>' | remove: '</p>' | truncatewords: 35 }}</p>	
+						<p><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">continue reading...</a></p>
+					</div>					
+				</div>
+	    	</div>
+
+		</li>
+
+		{% endif %}	
+		{% endif %}				
+	{% endfor %}
+
+	</ul>    
+</div>

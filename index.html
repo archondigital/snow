@@ -1,0 +1,81 @@
+---
+layout: home
+---
+
+<div id="about" class="about h50">
+	<div class="panel">
+		<div class="row fullwidth">
+			
+			<div class="large-8 large-centered columns">
+				<h1>Snow</h1>
+				<h2>A responsive Jekyll theme</h2>
+				
+				<p>Snow is my attempt at creating a semi-starter and clean Jekyll theme based on what I use in <a href="http://archon.digital" target="_blank">Archon Digital</a>. I have to do a lot of clean up first as this is right now littered with code that's specific to my personal site.</p>
+
+			</div>
+		</div>	
+	</div>
+</div>
+
+<div id="articles" class="articles">
+
+	{% for post in paginator.posts %}
+
+		<article class="article poof">
+			<div class="container">
+
+				<div class="row fullwidth">
+
+					<div class="large-8 large-centered columns">
+						<h2><a href="{{ post.url | prepend: site.baseurl }}">
+						{% if post.title_secondary %}<span class="label secondary t50">{{ post.title_secondary }}: </span><br>{% endif %}
+						
+						{{ post.title }}
+						</a></h2>
+						<span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+						<p><a href="{{ post.url | prepend: site.baseurl }}"><img src="{{ post.featured_image | prepend: site.baseurl }}"></a></p>
+						<p class="lead">{{ post.excerpt | remove: '<p>' | remove: '</p>' | truncatewords: 60 }}</p>
+				  		<p><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">continue reading...</a></p>
+					</div>
+				  	
+				  	
+				</div>			
+			</div>
+		</article>			
+
+	{% endfor %}
+	<hr>
+
+	{% if paginator.total_pages > 1 %}
+	<div class="row fullwidth">
+		<div class="large-8 large-centered columns text-center">
+			<ul class="pagination">
+			{% if paginator.previous_page %}
+				<li class="arrow"><a href="{{ paginator.previous_page_path | replace: '//', '/' }}">&laquo; Prev</a></li>
+			{% else %}
+				<li class="arrow unavailable"><span>&laquo; Prev</span></li>
+			{% endif %}
+			
+			{% for page in (1..paginator.total_pages) %}
+				{% if page == paginator.page %}
+		    		<li class="current"><a><em>{{ page }}</em></a></li>
+				{% elsif page == 1 %}
+					<li><a href="{{ '/index.html' | replace: '//', '/' }}">{{ page }}</a></li>
+			    {% else %}
+			      	<li><a href="{{ site.url }}/articles/{{ page }}">{{ page }}</a></li>
+			    {% endif %}
+			{% endfor %}
+
+			{% if paginator.next_page %}
+				<li class="arrow"><a href="{{ paginator.next_page_path | replace: '//', '/' }}">Next &raquo;</a></li>
+			{% else %}
+				<li class="arrow unavailable"><span>Next &raquo;</span></li>
+			{% endif %}	
+			</ul>
+			
+			
+		</div>
+	</div>
+	{% endif %}
+
+</div>

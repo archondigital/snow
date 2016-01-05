@@ -1,0 +1,24 @@
+# Site settings
+title: Snow
+email: overlord@archon-digital.com
+description: "Jekyll-powered blog template by Jon Cuevas"
+author: Author name
+baseurl: "http://archon.digital/snow-jekyll-theme"
+url: ""
+username: archondigital
+timezone: Asia/Manila
+paginate: 5
+paginate_path: "articles/:num"
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+gems:
+- jekyll-redirect-from
+#   - jekyll-sitemap
+
+# ads, analytics and disqus
+enable_disqus: true
+enable_adsense: true
+enable_analytics: true

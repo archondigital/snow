@@ -1,0 +1,51 @@
+---
+layout: default
+---
+<div class="post h-entry">
+
+	<header class="post-header">
+		<div class="row">
+		  	<div class="large-12 columns">
+			  	<h1 class="entry-title p-name">{{ page.title }}</h1>
+		  	</div>  		
+		</div>
+		<div class="row">
+			<div class="large-12 columns">
+				{% include entry-meta.html %}
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-12 columns">
+				{% include snippet-social.html %}
+			</div>
+		</div>
+
+	</header>
+
+	<!-- for tags -->
+	{% assign post = page %}
+	<!-- for tags end -->	
+	<article class="post-content entry-content e-content">
+		<div class="row">
+			<div class="large-8 columns">
+				<div class="flex-video">
+				  <iframe width="960" height="720" src="http://www.youtube.com/embed/{{ page.video_id }}?wmode=transparent&amp;autohide=1&amp;egm=0&amp;hd=1&amp;iv_load_policy=3&amp;modestbranding=1&amp;rel=0&amp;showinfo=0&amp;showsearch=0&amp;theme=light" frameborder="0" allowfullscreen></iframe>
+				</div>				
+			</div>
+			<div class="large-4 columns">
+				{{ content }}
+			</div>
+		</div>
+	</article>
+	
+	<div class="row">
+		<div class="large-12 columns">
+			<hr>
+			{% include snippet-tags-post.html %}
+			{% include snippet-social.html %}		
+		</div>
+	</div>
+	
+	{% include comments.html %}
+
+</div>
