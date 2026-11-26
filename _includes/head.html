@@ -33,11 +33,10 @@
 
   {% feed_meta %}
 
-  <link rel="stylesheet" href="{{ '/assets/css/app.css' | relative_url }}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
-
-  <script src="{{ '/assets/vendor/foundation/js/vendor/modernizr.js' | relative_url }}"></script>
+  <link rel="stylesheet" href="{{ '/assets/vendor/yeti/yeti.min.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/snow.css' | relative_url }}">
+  <script type="module" src="{{ '/assets/vendor/yeti/yeti.min.js' | relative_url }}"></script>
+  <script type="module" src="{{ '/assets/js/snow.js' | relative_url }}"></script>
 
   {% include analytics.html %}
 </head>

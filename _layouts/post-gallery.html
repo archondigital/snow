@@ -1,28 +1,21 @@
 ---
 layout: default
 ---
-<div class="post h-entry">
-  <span id="photo"></span>
-  <header class="post-header">
-    <div class="row">
-      <div class="large-12 columns">
-        <h1 class="entry-title p-name">{{ page.title }}</h1>
-        {% include entry-meta.html %}
-      </div>
-    </div>
-  </header>
-
-  <article class="post-content entry-content e-content">
-    <div class="row">
-      <div class="large-8 columns">
-        {% include gallery-feature.html %}
-      </div>
-      <div class="large-4 columns">
-        {{ content }}
+<article class="center h-entry" id="photo">
+  <div class="stack" data-gap="lg">
+    <header>
+      <h1 class="p-name">{{ page.title }}</h1>
+      {% include entry-meta.html %}
+    </header>
+    <div class="sidebar" data-side="end" data-width="md" data-gap="xl">
+      {% include gallery-feature.html %}
+      <div class="stack e-content">
+        <section>{{ content }}</section>
         {% include gallery-thumbs.html %}
       </div>
     </div>
-  </article>
+  </div>
+</article>
+{% include lightbox.html %}
 
-  {% include post-footer.html %}
-</div>
+{% include post-footer.html %}

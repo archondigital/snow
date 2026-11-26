@@ -6,20 +6,22 @@ permalink: /contact/
 <p class="lead">Lorem ipsum keme keme fayatollah kumenis na ang pamentos at ang emerut gorabels. Kaloka eksena buya chikadora jupang-pang biway pak ganern. Balaj valaj na ang planggana at chuvaness keri lang sangkatuts churva at ang Anaconda talbog. Jowabella mashumers bekimon kasi jowabella wasok ganders, ganda lang nang chos kaloka. Gorabels kaloka kebs shonget at ang, wiz kasi waley biway planggana talbog chaka betchay Cholo.</p>
 
 {%- if site.contact_form_action and site.contact_form_action != "" %}
-<form action="{{ site.contact_form_action }}" method="post">
-  <label for="contact-name">Name</label>
-  <input id="contact-name" name="name" type="text" autocomplete="name" required>
-
-  <label for="contact-email">Email</label>
-  <input id="contact-email" name="email" type="email" autocomplete="email" required>
-
-  <label for="contact-message">Message</label>
-  <textarea id="contact-message" name="message" rows="6" required></textarea>
-
-  <button class="button" type="submit">Send</button>
+<form class="stack" action="{{ site.contact_form_action }}" method="post">
+  <div class="field">
+    <label for="contact-name">Name</label>
+    <input id="contact-name" name="name" type="text" autocomplete="name" required>
+  </div>
+  <div class="field">
+    <label for="contact-email">Email</label>
+    <input id="contact-email" name="email" type="email" autocomplete="email" required aria-describedby="contact-email-error">
+    <p id="contact-email-error" data-error>Enter an email address we can reply to.</p>
+  </div>
+  <div class="field">
+    <label for="contact-message">Message</label>
+    <textarea id="contact-message" name="message" rows="6" required></textarea>
+  </div>
+  <div><button class="button" type="submit">Send</button></div>
 </form>
 {%- else %}
-<div class="panel">
-  <p class="meta">Set <code>contact_form_action</code> in <code>_config.yml</code> (e.g. a Formspree endpoint) to show the contact form, or email <a href="mailto:{{ site.email }}">{{ site.email }}</a>.</p>
-</div>
+<p class="box" data-border data-surface="sunken"><small>Set <code>contact_form_action</code> in <code>_config.yml</code> (e.g. a Formspree endpoint) to show the contact form, or email <a href="mailto:{{ site.email }}">{{ site.email }}</a>.</small></p>
 {%- endif %}

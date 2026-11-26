@@ -1,24 +1,25 @@
 {%- comment -%}
-  Thumbnail grid of the featured image + `page.gallery_content`.
-  Optional: height (px, default 120).
+  Square thumbnails of the featured image and `page.gallery_content`, all in
+  the post's lightbox gallery. Usage: {% include gallery-thumbs.html %}
 {%- endcomment -%}
 {%- if page.gallery_content -%}
-{%- assign thumb_height = include.height | default: 120 -%}
 {%- capture featured_src -%}{% include img-src.html src=page.featured_image %}{%- endcapture -%}
-<h5>Gallery</h5>
-<ul class="clearing-thumbs large-block-grid-3 medium-block-grid-2 small-block-grid-2" data-clearing>
-  <li>
-    <a class="th" href="{{ featured_src }}" style="max-height:{{ thumb_height }}px; overflow:hidden;">
-      <img src="{{ featured_src }}" alt="{{ page.title | escape }}" data-caption="{{ page.excerpt | default: page.title | strip_html | strip | escape }}" loading="lazy">
-    </a>
-  </li>
-  {%- for pic in page.gallery_content %}
-  {%- capture pic_src -%}{% include img-src.html src=pic.url %}{%- endcapture %}
-  <li>
-    <a class="th" href="{{ pic_src }}" style="max-height:{{ thumb_height }}px; overflow:hidden;">
-      <img src="{{ pic_src }}" alt="{{ pic.label | escape }}" data-caption="{{ pic.label | escape }}. {{ pic.caption | escape }}" loading="lazy">
-    </a>
-  </li>
-  {%- endfor %}
-</ul>
+<section class="stack" data-gap="sm" aria-labelledby="gallery-heading">
+  <h2 id="gallery-heading">Gallery</h2>
+  <ul class="grid" data-min="3xs" data-columns="3" data-gap="xs" role="list">
+    <li>
+      <a href="{{ featured_src }}" data-gallery="post" data-caption="{{ page.excerpt | default: page.title | strip_html | strip | escape }}">
+        <span class="frame" data-ratio="1/1"><img src="{{ featured_src }}" alt="{{ page.title | escape }}" loading="lazy"></span>
+      </a>
+    </li>
+    {%- for pic in page.gallery_content %}
+    {%- capture pic_src -%}{% include img-src.html src=pic.url %}{%- endcapture %}
+    <li>
+      <a href="{{ pic_src }}" data-gallery="post" data-caption="{{ pic.label | escape }}. {{ pic.caption | escape }}">
+        <span class="frame" data-ratio="1/1"><img src="{{ pic_src }}" alt="{{ pic.label | escape }}" loading="lazy"></span>
+      </a>
+    </li>
+    {%- endfor %}
+  </ul>
+</section>
 {%- endif -%}

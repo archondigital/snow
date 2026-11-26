@@ -1,11 +1,9 @@
-{%- comment -%} Date + title list. Usage: {% include post-list.html posts=some_posts %} {%- endcomment -%}
-<ul class="past no-bullet">
+{%- comment -%} Titles with their dates on a dotted leader. Usage: {% include post-list.html posts=some_posts %} {%- endcomment -%}
+<ul class="leaders" role="list">
   {%- for post in include.posts %}
   <li>
-    <div class="row collapse">
-      <div class="small-3 large-2 columns"><time class="meta" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b" }}:</time></div>
-      <div class="small-9 large-10 columns"><a href="{{ post.url | relative_url }}">{{ post.title }}{% if post.title_secondary %} <span class="label secondary t50">{{ post.title_secondary }}</span>{% endif %}</a></div>
-    </div>
+    <a href="{{ post.url | relative_url }}">{% if post.title_secondary %}{{ post.title_secondary }}: {% endif %}{{ post.title }}</a>
+    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b" }}</time>
   </li>
   {%- endfor %}
 </ul>

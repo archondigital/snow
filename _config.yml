@@ -61,7 +61,6 @@ defaults:
       permalink: /:title/
 
 exclude:
-  - _scss
   - CHANGELOG.md
   - README.md
   - LICENSE

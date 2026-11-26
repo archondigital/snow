@@ -1,69 +1,54 @@
 ---
 layout: default
 ---
-<div id="about" class="about h50">
-  <div class="panel">
-    <div class="row fullwidth">
-      <div class="large-8 large-centered columns">
-        <h1>{{ site.title }}</h1>
-        <h2>{{ site.tagline }}</h2>
-        <p>Lorem ipsum keme keme chever conalei na ang waley at bonggakea pamenthol chapter. Eklavu keme kasi ganern Chaka Khan krang-krang ano krung-krung chever. Bigalou at nang anech Julanis Morissette chenelyn pamin! Effem mujer ang effem chos, gorabels shonga-shonga bet Cloyd Julanis Morissette antibiotic ng Haggardo Versoza eksena.</p>
-      </div>
+<section class="box band" data-surface="base" data-gap-block="3xl" aria-labelledby="site-title">
+  <div class="center" data-max="lg">
+    <div class="stack" data-gap="sm">
+      <h1 id="site-title" class="billboard" data-fit="md-display">{{ site.title }}</h1>
+      <p class="lede">{{ site.tagline }}</p>
+      <p>Lorem ipsum keme keme chever conalei na ang waley at bonggakea pamenthol chapter. Eklavu keme kasi ganern Chaka Khan krang-krang ano krung-krung chever. Bigalou at nang anech Julanis Morissette chenelyn pamin! Effem mujer ang effem chos, gorabels shonga-shonga bet Cloyd Julanis Morissette antibiotic ng Haggardo Versoza eksena.</p>
     </div>
   </div>
-</div>
+</section>
 
-<div id="articles" class="articles">
-  {%- for post in paginator.posts %}
-  {%- capture featured_src -%}{% include img-src.html src=post.featured_image %}{%- endcapture %}
-  <article class="article">
-    <div class="container">
-      <div class="row fullwidth">
-        <div class="large-8 large-centered columns">
-          <h2><a href="{{ post.url | relative_url }}">
-            {%- if post.title_secondary %}<span class="label secondary t50">{{ post.title_secondary }}: </span><br>{% endif -%}
-            {{ post.title }}
-          </a></h2>
-          <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
-          {%- if post.featured_image %}
-          <p><a href="{{ post.url | relative_url }}"><img src="{{ featured_src }}" alt="{{ post.title | escape }}" loading="lazy"></a></p>
-          {%- endif %}
-          <p class="lead">{{ post.excerpt | strip_html | truncatewords: 60 }}</p>
-          <p><a class="post-link" href="{{ post.url | relative_url }}">continue reading&hellip;</a></p>
-        </div>
+<section class="center" data-max="lg" aria-label="Articles">
+  <div class="stack" data-gap="xl">
+    {%- for post in paginator.posts %}
+    {%- capture featured_src -%}{% include img-src.html src=post.featured_image %}{%- endcapture %}
+    <article class="card" data-threshold="md" data-ratio="3/2">
+      {%- if post.featured_image %}
+      <figure><img src="{{ featured_src }}" alt="" loading="lazy"></figure>
+      {%- endif %}
+      <div class="stack" data-gap="sm">
+        <h2><a href="{{ post.url | relative_url }}" data-stretch>
+          {%- if post.title_secondary %}<small data-text="grey-60">{{ post.title_secondary }}:</small> {% endif -%}
+          {{ post.title }}</a></h2>
+        <p><small data-text="grey-60"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time></small></p>
+        <p>{{ post.excerpt | strip_html | truncatewords: 60 }}</p>
       </div>
-    </div>
-  </article>
-  {%- endfor %}
-  <hr>
+      <footer><span class="button" data-emphasis="low" data-size="sm" aria-hidden="true">Continue reading &rarr;</span></footer>
+    </article>
+    {%- endfor %}
 
-  {%- if paginator.total_pages > 1 %}
-  <div class="row fullwidth">
-    <div class="large-8 large-centered columns text-center">
-      <ul class="pagination" role="navigation" aria-label="Pagination">
+    {%- if paginator.total_pages > 1 %}
+    <nav class="pagination" aria-label="Pagination" data-justify="center">
+      <ol role="list">
         {%- if paginator.previous_page %}
-        <li class="arrow"><a href="{{ paginator.previous_page_path | relative_url }}">&laquo; Prev</a></li>
-        {%- else %}
-        <li class="arrow unavailable"><span>&laquo; Prev</span></li>
+        <li><a href="{{ paginator.previous_page_path | relative_url }}" rel="prev">Previous</a></li>
         {%- endif %}
-
         {%- for page_number in (1..paginator.total_pages) %}
-          {%- if page_number == paginator.page %}
-        <li class="current"><a aria-current="page">{{ page_number }}</a></li>
-          {%- elsif page_number == 1 %}
-        <li><a href="{{ '/' | relative_url }}">{{ page_number }}</a></li>
+          {%- if page_number == 1 %}
+            {%- assign page_href = '/' | relative_url %}
           {%- else %}
-        <li><a href="{{ site.paginate_path | replace: ':num', page_number | relative_url }}">{{ page_number }}</a></li>
+            {%- assign page_href = site.paginate_path | replace: ':num', page_number | relative_url %}
           {%- endif %}
+        <li><a href="{{ page_href }}"{% if page_number == paginator.page %} aria-current="page"{% endif %}>{{ page_number }}</a></li>
         {%- endfor %}
-
         {%- if paginator.next_page %}
-        <li class="arrow"><a href="{{ paginator.next_page_path | relative_url }}">Next &raquo;</a></li>
-        {%- else %}
-        <li class="arrow unavailable"><span>Next &raquo;</span></li>
+        <li><a href="{{ paginator.next_page_path | relative_url }}" rel="next">Next</a></li>
         {%- endif %}
-      </ul>
-    </div>
+      </ol>
+    </nav>
+    {%- endif %}
   </div>
-  {%- endif %}
-</div>
+</section>

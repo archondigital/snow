@@ -2,6 +2,33 @@
 
 All notable changes to Snow are documented here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.0.0] - 2026-11-26
+
+Snow moves from Foundation 5 to [Yeti](https://foundationcss.com/yeti/) `7.0.0-alpha.2`, the successor to Foundation for Sites.
+
+### ⚠️ Breaking changes
+
+- **New CSS framework.** Every layout and include is rewritten in Yeti markup: classes name a thing (`card`, `nav`, `stack`) and `data-*` attributes configure it. Foundation's grid (`row`, `large-8 columns`) and component classes are gone, so custom content using them needs updating.
+- **Yeti is alpha.** Its class names, attributes and tokens can change before beta.
+- **Licence.** Yeti ships under FSL-1.1-MIT (MIT after two years), not MIT. Fine for any site; it only forbids offering Yeti as a competing product.
+- **No jQuery, Foundation JS, Modernizr or Font Awesome.** Custom scripts that relied on them must be rewritten.
+- **Sass removed.** Theme settings are CSS custom properties in `assets/css/snow.css`; `_scss/` and `assets/css/app.css` are gone.
+- **Lightbox markup changed.** Gallery links carry `data-gallery`; the Clearing `data-clearing` lists are gone.
+
+### ✨ New
+
+- **Dark mode** that follows the reader's system setting, from Yeti's `light-dark()` tokens.
+- **Lightbox on the native `<dialog>`**, with Previous/Next buttons, arrow keys, Escape and backdrop close, and a `#photo` link that opens it. Works as plain links without JavaScript.
+- **Accessible nav**: skip link, sticky bar, popover menu on small screens, `aria-current` on the current page.
+- Archive and tag lists on dotted leaders; tags as badges; posts on the homepage and tag pages as cards.
+- Contact form built from Yeti `field` components with native validation.
+
+### 🔧 Improvements
+
+- No build and no runtime dependencies besides Yeti: about 160 KB of CSS and JS in total, down from Foundation, jQuery and Font Awesome.
+- Layouts respond to their own container width, not the window, so the post layouts hold up in narrow columns.
+- All built pages pass Yeti's HTML validator.
+
 ## [1.0.0] - 2026-11-26
 
 A clean-up release: Snow is now a neutral starter theme that builds on current Jekyll, with every trace of the original personal site removed.
