@@ -1,18 +1,12 @@
 <!DOCTYPE html>
-<html>
-
+<html class="no-js" lang="{{ page.lang | default: site.lang | default: 'en' }}">
   {% include head.html %}
-
-    <body>
-    {% include analytics.html %}
-    {% include scripts-body.html %}
+  <body class="layout-{{ page.layout | default: 'page' }}">
     {% include header.html %}
 
     {{ content }}
 
     {% include footer.html %}
-    {% include modal-contact.html %}
     {% include scripts-footer.html %}
-
-    </body>
+  </body>
 </html>

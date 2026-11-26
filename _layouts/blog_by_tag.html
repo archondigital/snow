@@ -1,123 +1,56 @@
 ---
 layout: default
 ---
+{%- assign tagged_posts = site.tags[page.tag] -%}
+{%- assign posts_with_images = tagged_posts | where_exp: "post", "post.featured_image" -%}
 <div class="page">
-	<header class="post-header">
-		<div class="row">
-			<div class="large-12 columns">
-			<h1 id="entry-title">{{ page.tag }}, <small>Articles and images by tag/topic</small></h1>
-			</div>
-		</div>
-	</header>			
+  <header class="post-header">
+    <div class="row">
+      <div class="large-12 columns">
+        <h1 class="entry-title">{{ page.tag }}, <small>Articles and images by tag/topic</small></h1>
+        {% if page.excerpt %}<p class="lead">{{ page.excerpt }}</p>{% endif %}
+      </div>
+    </div>
+  </header>
 
-	<article class="post-content">
-		<div class="row">
-			<div class="large-12 columns">
-				{% include snippet-social.html %}
-			</div>
-		</div>
-		<div class="row">
-			<div class="large-12 columns">
-				{% if page.excerpt %}<p class="lead">{{ page.excerpt }}</p>{% endif %}
-			</div>
-		</div>
-		<br>
-		<div class="row">
-			<div class="large-5 
-			{% if site.tags[page.tag] %}
-				{% for post in site.tags[page.tag] %}
-					{% if post.featured_image %}
-						large-push-7
-					{% endif %}
-				{% endfor %}
-			{% endif %}
+  <article class="post-content">
+    <div class="row">
+      <div class="large-5 {% if posts_with_images.size > 0 %}large-push-7 {% endif %}columns">
+        {%- if tagged_posts.size > 0 %}
+          {%- assign posts_by_year = tagged_posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+          {%- for year in posts_by_year %}
+          <h3>{{ year.name }}</h3>
+          {% include post-list.html posts=year.items %}
+          {%- endfor %}
+        {%- else %}
+          <p>There are no posts for this topic. Check the <a href="{{ '/archives/' | relative_url }}">archives</a> for more posts.</p>
+        {%- endif %}
 
-			 columns">
+        <h3><small>Browse other Tags/Topics</small></h3>
+        <ul class="widget-tags">
+          {% include snippet-tags-widget.html %}
+        </ul>
+        <p class="rss-subscribe">Subscribe <a href="{{ '/feed.xml' | relative_url }}">via RSS</a></p>
+      </div>
 
-			    {% if site.tags[page.tag] %}
-			        {% for post in site.tags[page.tag] %}
-			            {% capture post_year %}{{ post.date | date: '%Y' }}{% endcapture %}
-			            {% if forloop.first %}
-			                <h3>{{ post_year }}</h3>
-			                <div class="list-group">
-			                	<ul class="past no-bullet">
-			            {% endif %}
-						
-			            {% if forloop.first == false %}
-			                {% assign previous_index = forloop.index0 | minus: 1 %}
-			                {% capture previous_post_year %}{{ site.tags[page.tag][previous_index].date | date: '%Y' }}{% endcapture %}
-			                {% if post_year != previous_post_year %}
-			                    </div><h3>{{ post_year }}</h3>
-			                    <div class="list-group">
-			                    	<ul class="past no-bullet">
-			                {% endif %}
-			            {% endif %}
-						
-										<li>
-											<div class="row collapse">
-												<div class="large-2 columns"><time class="meta" style="display:inline-block;width:3.25rem;">{{ post.date | date:"%d %b" }}:</time></div>
-												<div class="large-10 columns"><a href="{{ post.url }}">{{ post.title }}{% if post.title_secondary %} <span class="label secondary t50">{{ post.title_secondary }}</span>{% endif %}</a></div>
-											</div>
-										</li>			            			
-
-			            {% if forloop.last %}
-			            		</ul>
-			                </div>
-			            {% endif %}
-			        {% endfor %}
-			    {% else %}
-			        <p>There are no posts for this topic. Check our <a href="/archives/">archives</a> for more posts.</p>
-			    {% endif %}
-			
-			
-				
-				<h3><small>Browse other Tags/Topics</small></h3>
-			    <ul class="widget-tags">
-			    {% include snippet-tags-widget.html %}
-			    </ul>
-				<p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
-			</div>
-
-			<div class="large-7 
-
-			{% if site.tags[page.tag] %}
-				{% for post in site.tags[page.tag] %}
-					{% if post.featured_image %}
-						large-pull-5
-					{% endif %}
-				{% endfor %}
-			{% endif %}
-
-			 columns">
-				
-				<ul class="clearing-thumbs large-block-grid-2 medium-block-grid-2 small-block-grid-2" data-clearing>
-			    	
-				    {% if site.tags[page.tag] %}
-			        {% for post in site.tags[page.tag] %}
-			    
-			        	{% if post.featured_image %}
-							{% for pic in post.featured_image %}
-							<li>
-								<a class="th" href="{{ post.featured_image | prepend: site.baseurl }}" style="max-height:275px; overflow:hidden;">
-								<img class="link-to-post" title="{{ post.title }}" alt="{{ post.title }}" src="
-								{% if post.featured_image_thumb %}{{ post.featured_image_thumb | prepend: site.baseurl }}{% else %}{{ post.featured_image | prepend: site.baseurl }}{% endif %}" data-caption="{{ post.title }}. {{ post.excerpt | strip_html }}"
-								href="{{ post.url }}" />
-								</a>
-							</li>
-							{% endfor %}
-						{% else %}
-						{% endif %}
-
-
-				        {% endfor %}
-				    {% else %}
-				       
-					{% endif %}	    
-			    </ul> 
-				
-			</div>
-		</div>
-	</article>
-
+      {%- if posts_with_images.size > 0 %}
+      <div class="large-7 large-pull-5 columns">
+        <ul class="clearing-thumbs large-block-grid-2 medium-block-grid-2 small-block-grid-2" data-clearing>
+          {%- for post in posts_with_images %}
+          {%- capture full_src -%}{% include img-src.html src=post.featured_image %}{%- endcapture -%}
+          {%- assign thumb_path = post.featured_image_thumb | default: post.featured_image -%}
+          {%- capture thumb_src -%}{% include img-src.html src=thumb_path %}{%- endcapture %}
+          <li>
+            <a class="th" href="{{ full_src }}" style="max-height:275px; overflow:hidden;">
+              <img class="link-to-post" src="{{ thumb_src }}" alt="{{ post.title | escape }}"
+                   data-caption="{{ post.title | escape }}. {{ post.excerpt | strip_html | strip | escape }}"
+                   data-post-url="{{ post.url | relative_url }}" loading="lazy">
+            </a>
+          </li>
+          {%- endfor %}
+        </ul>
+      </div>
+      {%- endif %}
+    </div>
+  </article>
 </div>
-

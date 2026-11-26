@@ -1,17 +1,10 @@
-{% if site.enable_adsense == true %}
-<!-- BuySellAds Zone Code -->
-<!-- <div id="bsap_1297334" class="bsarocks bsap_659b1f8cb94733cf9b883299bd357fdd"></div> -->
-<!-- End BuySellAds Zone Code -->
-
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- Archon Digital 2015 -->
+{%- if site.adsense.client and site.adsense.client != "" and jekyll.environment == "production" -%}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ site.adsense.client }}" crossorigin="anonymous"></script>
 <ins class="adsbygoogle"
      style="display:inline-block;width:300px;height:250px"
-     data-ad-client="ca-pub-4990847170766317"
-     data-ad-slot="8659334290"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-{% else %}
-	<img src="{{ site.baseurl }}/assets/images/ad-sample-300x250.jpg">
-{% endif %}
+     data-ad-client="{{ site.adsense.client }}"
+     data-ad-slot="{{ site.adsense.slot }}"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+{%- else -%}
+<img src="https://placehold.co/300x250/e7e7e7/888888?text=Ad+300x250" width="300" height="250" alt="Advertisement placeholder" loading="lazy">
+{%- endif -%}

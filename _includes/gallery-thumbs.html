@@ -1,0 +1,24 @@
+{%- comment -%}
+  Thumbnail grid of the featured image + `page.gallery_content`.
+  Optional: height (px, default 120).
+{%- endcomment -%}
+{%- if page.gallery_content -%}
+{%- assign thumb_height = include.height | default: 120 -%}
+{%- capture featured_src -%}{% include img-src.html src=page.featured_image %}{%- endcapture -%}
+<h5>Gallery</h5>
+<ul class="clearing-thumbs large-block-grid-3 medium-block-grid-2 small-block-grid-2" data-clearing>
+  <li>
+    <a class="th" href="{{ featured_src }}" style="max-height:{{ thumb_height }}px; overflow:hidden;">
+      <img src="{{ featured_src }}" alt="{{ page.title | escape }}" data-caption="{{ page.excerpt | default: page.title | strip_html | strip | escape }}" loading="lazy">
+    </a>
+  </li>
+  {%- for pic in page.gallery_content %}
+  {%- capture pic_src -%}{% include img-src.html src=pic.url %}{%- endcapture %}
+  <li>
+    <a class="th" href="{{ pic_src }}" style="max-height:{{ thumb_height }}px; overflow:hidden;">
+      <img src="{{ pic_src }}" alt="{{ pic.label | escape }}" data-caption="{{ pic.label | escape }}. {{ pic.caption | escape }}" loading="lazy">
+    </a>
+  </li>
+  {%- endfor %}
+</ul>
+{%- endif -%}
