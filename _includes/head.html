@@ -1,81 +1,43 @@
-
-
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta name="google-site-verification" content="ucFSwiLI-MWC-PAmmQ-mpSCLRqB-3BACQcEV_Mx8UrI" />
-	<meta property="fb:app_id" content="138528675742" />
-	<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="http://archon.digital/feed.xml" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>
-    	{% if page.layout != 'home' %}{% if page.title %}{% if page.title_secondary %}{{ page.title_secondary }}:{% endif %} {{ page.title }}{% endif %}{% if template == blog_by_tag %}{{ page.tag }}{% endif %} - {{ site.title }}{% else %}{{ site.title }}{% endif %}
-	</title>
+  {%- capture doc_title -%}{% include page-title.html %}{%- endcapture -%}
+  {%- assign doc_title = doc_title | strip | escape -%}
+  {%- assign doc_description = page.excerpt | default: site.description | strip_html | strip_newlines | strip | escape -%}
+  {%- if page.featured_image_thumb or page.featured_image -%}
+    {%- assign social_src = page.featured_image_thumb | default: page.featured_image -%}
+    {%- capture doc_image -%}{% include img-src.html src=social_src %}{%- endcapture -%}
+  {%- else -%}
+    {%- capture doc_image -%}{% include img-src.html src=site.default_image %}{%- endcapture -%}
+  {%- endif -%}
+  {%- unless doc_image contains '://' -%}{%- assign doc_image = doc_image | prepend: site.url -%}{%- endunless -%}
 
-    <link rel="canonical" href="http://archon.digital{{ page.url }}">
-	
-    <meta property="og:site_name" content="{{ site.title }}" />
+  <title>{{ doc_title }}</title>
+  <meta name="description" content="{{ doc_description }}">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  {% if page.tags.size > 0 %}<meta name="keywords" content="{{ page.tags | join: ', ' | escape }}">{% endif %}
 
-	<meta name="twitter:title" content="{% if page.layout != 'home' %}{% if page.title %}{% if page.title_secondary %}{{ page.title_secondary }}:{% endif %} {{ page.title }}{% endif %}{% if template == blog_by_tag %}{{ page.tag }}{% endif %} - {{ site.title }}{% else %}{{ site.title }}{% endif %}">
-	<meta property="og:title" content="{% if page.layout != 'home' %}{% if page.title %}{% if page.title_secondary %}{{ page.title_secondary }}:{% endif %} {{ page.title }}{% endif %}{% if template == blog_by_tag %}{{ page.tag }}{% endif %} - {{ site.title }}{% else %}{{ site.title }}{% endif %}" />
-	
-	<meta itemprop="name" content="{{ page.title }}">
-	{% if page.excerpt %}
-	
-	<!-- description -->
-	<meta name="twitter:description" content="{{ page.excerpt | strip_html }}">
-	<meta property="og:description" content="{{ page.excerpt | strip_html }}" />
-	<meta itemprop="description" content="{{ page.excerpt | strip_html }}">
-	<meta name="description" content="{{ page.excerpt | strip_html }}" />
-	{% else %}
-	<!-- default description -->
-	<meta name="twitter:description" content="Archon Digital, World Domination and the Internet - {{ site.description }}">
-	<meta property="og:description" content="Archon Digital, World Domination and the Internet - {{ site.description }}" />
-	<meta itemprop="description" content="Archon Digital, World Domination and the Internet - {{ site.description }}">
-	<meta name="description" content="Archon Digital, World Domination and the Internet - {{ site.description }}" />
-	{% endif %}
-	<meta name="twitter:creator" content="@archondigital">
-	<meta name="twitter:domain" content="archon.digital{{ page.url }}">
-	<meta property="og:type" content="article" />
-	<meta property="og:url" content="http://archon.digital{{ page.url }}" />
-	{% if page.featured_image %}
-	<!-- featured image -->
-	<meta property="og:image" content="{% if page.featured_image_thumb %}{{ page.featured_image_thumb | prepend: site.baseurl }}{% else %}{{ page.featured_image | prepend: site.baseurl }}{% endif %}" />
-	<meta name="twitter:image:src" content="{% if page.featured_image_thumb %}{{ page.featured_image_thumb | prepend: site.baseurl }}{% else %}{{ page.featured_image | prepend: site.baseurl }}{% endif %}">
-	<meta name="twitter:card" content="summary_large_image">
-	{% else %}
-	<!-- no featured image, loading default image -->
-	<meta property="og:image" content="{{ "/assets/images/alapeanutbuttersandwiches.jpg" | prepend: site.baseurl }}" />
-	<meta name="twitter:image:src" content="{{ "/assets/images/alapeanutbuttersandwiches.jpg" | prepend: site.baseurl }}">
-	<meta name="twitter:card" content="summary_large_image">
-	{% endif %}
-	<meta name="twitter:site" content="@archondigital">
-	<link rel="author" href="https://plus.google.com/google-plus-profile-id/posts"/>
-	{% if page.keywords %}
-	<meta name="keywords" content="{{ page.keywords }}, {% if page.tags %}{% for tags in page.tags %}{{ tags }}, {% endfor %}{% else %}{% endif %}{{ page.title }}">
-	{% else %}
-	<meta name="keywords" content="Archon Digital, World Domination and the Internet, {% if page.tags %}{% for tags in page.tags %}{{ page.title }}, {{ tags }}{% endfor %}{% else %}{{ page.title }}, {{ page.excerpt | strip_html }}{% endif %}">
-	{% endif %}
-	
-	<!-- pinterest verification -->
-	<meta name="p:domain_verify" content="987601f543e8047e2244bd1f76e96caa"/>
+  <!-- Open Graph / Twitter -->
+  <meta property="og:site_name" content="{{ site.title | escape }}">
+  <meta property="og:title" content="{{ doc_title }}">
+  <meta property="og:description" content="{{ doc_description }}">
+  <meta property="og:type" content="{% if page.date %}article{% else %}website{% endif %}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:image" content="{{ doc_image }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ doc_title }}">
+  <meta name="twitter:description" content="{{ doc_description }}">
+  <meta name="twitter:image" content="{{ doc_image }}">
+  {% if site.twitter_username != "" and site.twitter_username %}<meta name="twitter:site" content="@{{ site.twitter_username }}">{% endif %}
 
-	<link rel="stylesheet" href="{{ "/assets/css/app.css" | prepend: site.baseurl }}">
-	
-	<!-- Font Awesome -->
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ "/assets/css/style.css" | prepend: site.baseurl }}">
+  {% feed_meta %}
 
-    <script src="{{ "/assets/bower_components/modernizr/modernizr.js" | prepend: site.baseurl }}"></script>
+  <link rel="stylesheet" href="{{ '/assets/css/app.css' | relative_url }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 
-	{% include scripts-head.html %}
+  <script src="{{ '/assets/vendor/foundation/js/vendor/modernizr.js' | relative_url }}"></script>
 
-	<meta name="blogcatalog" content="9BC8694366" />
-
-	<!-- testing sumome -->
-	<script src="//load.sumome.com/" data-sumo-site-id="40813dcb20cd53deba118d04ea72c5f3e713f037e9835e044465f30ba702548c" async="async"></script>
-
-	{% include scripts-facebook-pixel.html %}
+  {% include analytics.html %}
 </head>
-

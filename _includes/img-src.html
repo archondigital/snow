@@ -1,0 +1,6 @@
+{%- comment -%}
+  Outputs a usable image URL: absolute URLs (e.g. placeholder services) pass
+  through untouched, site-relative paths get the baseurl.
+  Usage: {% include img-src.html src=page.featured_image %}
+{%- endcomment -%}
+{%- if include.src contains '://' -%}{{ include.src }}{%- else -%}{{ include.src | relative_url }}{%- endif -%}

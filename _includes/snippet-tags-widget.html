@@ -1,4 +1,7 @@
-	<!-- dev -->
-	<li><a href="{{ "/topic/analog/" | prepend: site.baseurl }}">Analog</a></li>
-	
-	
+{%- comment -%} Every tag used on the site, alphabetically, linking to its /topic/ page. {%- endcomment -%}
+{%- capture tag_list -%}{%- for tag in site.tags -%}{{ tag[0] }}|{%- endfor -%}{%- endcapture -%}
+{%- assign tag_names = tag_list | split: "|" | sort_natural -%}
+{%- for tag_name in tag_names %}
+{%- assign tag_slug = tag_name | slugify %}
+<li><a href="{{ '/topic/' | append: tag_slug | append: '/' | relative_url }}">{{ tag_name }}</a></li>
+{%- endfor %}

@@ -1,0 +1,10 @@
+{%- comment -%} Full document title, shared by <title> and social meta tags. {%- endcomment -%}
+{%- if paginator and paginator.page > 1 -%}
+  Page {{ paginator.page }} - {{ site.title }}
+{%- elsif page.url == '/' -%}
+  {{ site.title }}{% if site.tagline %} — {{ site.tagline }}{% endif %}
+{%- elsif page.layout == 'blog_by_tag' -%}
+  {{ page.tag }} - {{ site.title }}
+{%- else -%}
+  {% if page.title_secondary %}{{ page.title_secondary }}: {% endif %}{{ page.title }} - {{ site.title }}
+{%- endif -%}

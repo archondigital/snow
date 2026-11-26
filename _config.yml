@@ -1,24 +1,71 @@
+# ---------------------------------------------------------------------------
 # Site settings
+# ---------------------------------------------------------------------------
 title: Snow
-email: overlord@archon-digital.com
-description: "Jekyll-powered blog template by Jon Cuevas"
-author: Author name
-baseurl: "http://archon.digital/snow"
-url: ""
-username: archondigital
+tagline: A responsive Jekyll theme
+description: >-
+  Snow is a clean, responsive Jekyll starter theme built on Foundation 5.
+  Lorem ipsum keme keme — all sample content is Beki Ipsum dummy text.
+author: Juan dela Cruz
+email: hello@example.com
+lang: en
 timezone: Asia/Manila
-paginate: 5
-paginate_path: "articles/:num"
 
+# `url` is the scheme + host, `baseurl` is the sub-path the site is served from.
+# For a GitHub Pages project site: url: "https://<user>.github.io", baseurl: "/snow"
+url: ""
+baseurl: ""
+
+# Social handles (leave blank to hide the link)
+github_username: ""
+twitter_username: ""
+
+# Fallback image for social cards when a post has no featured image
+default_image: "https://picsum.photos/seed/snow-default/1200/630"
+
+# ---------------------------------------------------------------------------
+# Optional integrations — all off by default. Fill in to enable.
+# ---------------------------------------------------------------------------
+google_analytics: ""      # GA4 measurement ID, e.g. G-XXXXXXXXXX
+disqus_shortname: ""      # e.g. my-blog
+adsense:
+  client: ""              # e.g. ca-pub-0000000000000000
+  slot: ""                # 300x250 unit slot ID
+contact_form_action: ""   # Form endpoint, e.g. https://formspree.io/f/xxxxxxx
+
+# ---------------------------------------------------------------------------
 # Build settings
+# ---------------------------------------------------------------------------
 markdown: kramdown
 permalink: pretty
 
-gems:
-- jekyll-redirect-from
-#   - jekyll-sitemap
+paginate: 5
+paginate_path: "/articles/:num/"
 
-# ads, analytics and disqus
-enable_disqus: true
-enable_adsense: true
-enable_analytics: true
+plugins:
+  - jekyll-paginate
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-redirect-from
+
+feed:
+  path: feed.xml
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      comments: true
+      permalink: /:title/
+
+exclude:
+  - _scss
+  - CHANGELOG.md
+  - README.md
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+  - vendor/bundle/
+  - node_modules
