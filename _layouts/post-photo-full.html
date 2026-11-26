@@ -2,69 +2,41 @@
 layout: default
 ---
 {%- capture featured_src -%}{% include img-src.html src=page.featured_image %}{%- endcapture -%}
-{%- capture post_heading -%}
-<h1 class="entry-title p-name">{% if page.title_secondary %}<small>{{ page.title_secondary }}:</small><br>{% endif %}{{ page.title }}</h1>
-{%- endcapture -%}
-{%- capture post_intro -%}
-  {%- if page.intro_description %}<p>{{ page.intro_description }}</p>{% endif %}
-  {%- if page.intro_quote %}
-  <blockquote>
-    <p class="lead">&ldquo;{{ page.intro_quote }}&rdquo;</p>
-    <cite>{% if page.intro_cite_url %}<a href="{{ page.intro_cite_url }}" rel="noopener" target="_blank">{{ page.intro_cite }}</a>{% else %}{{ page.intro_cite }}{% endif %}</cite>
-  </blockquote>
-  {%- endif %}
-{%- endcapture -%}
-
-<div class="post h-entry fullscreen hide-for-small" style="background: url('{{ featured_src }}') no-repeat {{ page.background_position | default: 'center center' }} / cover;">
-  <div class="row">
-    <div class="large-4 large-offset-8 columns">
-      <header class="post-header">
-        {% unless page.title_hide %}{{ post_heading }}{% endunless %}
-      </header>
-      <article class="post-content entry-content e-content">
-        {{ post_intro }}
-      </article>
-    </div>
-  </div>
-  <span id="more" style="position:absolute;bottom:2rem;"></span>
-  <span id="photo"></span>
-</div>
-
-<div class="show-for-small">
-  <img src="{{ featured_src }}" alt="{{ page.title | escape }}">
-  <header class="post-header">
-    <div class="row">
-      <div class="large-12 columns">
-        {{ post_heading }}
+<article class="stack h-entry" data-gap="2xl">
+  <header class="cover photo-cover" data-height="lg" style="--photo-cover-image: url('{{ featured_src }}'); --photo-cover-position: {{ page.background_position | default: 'center' }};">
+    <div class="center" data-center>
+      <div class="box photo-cover__panel" data-gap="lg">
+        <div class="stack">
+          {% include post-heading.html %}
+          {%- if page.intro_description %}
+          <p>{{ page.intro_description }}</p>
+          {%- endif %}
+          {%- if page.intro_quote %}
+          <figure>
+            <blockquote><p>&ldquo;{{ page.intro_quote }}&rdquo;</p></blockquote>
+            <figcaption>{% if page.intro_cite_url %}<a href="{{ page.intro_cite_url }}" rel="noopener">{{ page.intro_cite }}</a>{% else %}{{ page.intro_cite }}{% endif %}</figcaption>
+          </figure>
+          {%- endif %}
+        </div>
       </div>
     </div>
   </header>
-  <article class="post-content entry-content e-content">
-    <div class="row">
-      <div class="large-12 columns">
-        {{ post_intro }}
+
+  <div class="center" id="photo">
+    <div class="sidebar" data-side="end" data-width="sm" data-gap="xl">
+      <div class="sidebar" data-width="2xs" data-gap="lg">
+        <div>{% include gallery-feature.html hint=true %}</div>
+        <section class="e-content">
+          {% include entry-meta.html %}
+          {{ content }}
+        </section>
       </div>
+      <aside aria-label="Sponsor">
+        {% include adzone01.html %}
+      </aside>
     </div>
-  </article>
-</div>
-
-<div class="row">
-  <div class="large-12 columns">
-    {% if page.title_hide %}{{ post_heading }}{% endif %}
-    {% include entry-meta.html %}
   </div>
-</div>
-
-<div class="row">
-  <div class="large-2 columns hide-for-small">
-    {% include gallery-feature.html hint=true %}
-  </div>
-  <div class="large-6 columns">
-    {{ content }}
-  </div>
-  <aside class="large-4 columns">
-    {% include adzone01.html %}
-  </aside>
-</div>
+</article>
+{% include lightbox.html %}
 
 {% include post-footer.html %}

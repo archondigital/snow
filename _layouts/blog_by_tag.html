@@ -2,55 +2,50 @@
 layout: default
 ---
 {%- assign tagged_posts = site.tags[page.tag] -%}
-{%- assign posts_with_images = tagged_posts | where_exp: "post", "post.featured_image" -%}
-<div class="page">
-  <header class="post-header">
-    <div class="row">
-      <div class="large-12 columns">
-        <h1 class="entry-title">{{ page.tag }}, <small>Articles and images by tag/topic</small></h1>
-        {% if page.excerpt %}<p class="lead">{{ page.excerpt }}</p>{% endif %}
-      </div>
-    </div>
-  </header>
+<article class="center">
+  <div class="stack" data-gap="lg">
+    <header>
+      <h1>{{ page.tag }}</h1>
+      <p class="lede">{{ page.excerpt | default: "Articles and images filed under this topic." }}</p>
+    </header>
 
-  <article class="post-content">
-    <div class="row">
-      <div class="large-5 {% if posts_with_images.size > 0 %}large-push-7 {% endif %}columns">
+    <div class="sidebar" data-side="end" data-width="sm" data-gap="2xl">
+      <div>
         {%- if tagged_posts.size > 0 %}
-          {%- assign posts_by_year = tagged_posts | group_by_exp: "post", "post.date | date: '%Y'" %}
-          {%- for year in posts_by_year %}
-          <h3>{{ year.name }}</h3>
-          {% include post-list.html posts=year.items %}
-          {%- endfor %}
-        {%- else %}
-          <p>There are no posts for this topic. Check the <a href="{{ '/archives/' | relative_url }}">archives</a> for more posts.</p>
-        {%- endif %}
-
-        <h3><small>Browse other Tags/Topics</small></h3>
-        <ul class="widget-tags">
-          {% include snippet-tags-widget.html %}
-        </ul>
-        <p class="rss-subscribe">Subscribe <a href="{{ '/feed.xml' | relative_url }}">via RSS</a></p>
-      </div>
-
-      {%- if posts_with_images.size > 0 %}
-      <div class="large-7 large-pull-5 columns">
-        <ul class="clearing-thumbs large-block-grid-2 medium-block-grid-2 small-block-grid-2" data-clearing>
-          {%- for post in posts_with_images %}
-          {%- capture full_src -%}{% include img-src.html src=post.featured_image %}{%- endcapture -%}
-          {%- assign thumb_path = post.featured_image_thumb | default: post.featured_image -%}
-          {%- capture thumb_src -%}{% include img-src.html src=thumb_path %}{%- endcapture %}
+        <ul class="grid" data-min="xs" data-columns="2" role="list">
+          {%- for post in tagged_posts %}
           <li>
-            <a class="th" href="{{ full_src }}" style="max-height:275px; overflow:hidden;">
-              <img class="link-to-post" src="{{ thumb_src }}" alt="{{ post.title | escape }}"
-                   data-caption="{{ post.title | escape }}. {{ post.excerpt | strip_html | strip | escape }}"
-                   data-post-url="{{ post.url | relative_url }}" loading="lazy">
-            </a>
+            <article class="card">
+              {%- if post.featured_image %}
+              {%- assign thumb_path = post.featured_image_thumb | default: post.featured_image -%}
+              {%- capture thumb_src -%}{% include img-src.html src=thumb_path %}{%- endcapture %}
+              <figure><img src="{{ thumb_src }}" alt="" loading="lazy"></figure>
+              {%- endif %}
+              <div>
+                <h2><a href="{{ post.url | relative_url }}" data-stretch>{{ post.title }}</a></h2>
+                <p><small data-text="grey-60"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%-d %b %Y" }}</time></small></p>
+              </div>
+            </article>
           </li>
           {%- endfor %}
         </ul>
+        {%- else %}
+        <p>There are no posts for this topic yet. The <a href="{{ '/archives/' | relative_url }}">archives</a> have everything else.</p>
+        {%- endif %}
       </div>
-      {%- endif %}
+
+      <aside class="stack" aria-label="By year and topic">
+        {%- assign posts_by_year = tagged_posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+        {%- for year in posts_by_year %}
+        <div class="stack" data-gap="sm">
+          <h2>{{ year.name }}</h2>
+          {% include post-list.html posts=year.items %}
+        </div>
+        {%- endfor %}
+        <h2>Other topics</h2>
+        {% include tag-list.html %}
+        <p><a href="{{ '/feed.xml' | relative_url }}">Subscribe via RSS</a></p>
+      </aside>
     </div>
-  </article>
-</div>
+  </div>
+</article>

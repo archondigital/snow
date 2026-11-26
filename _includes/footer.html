@@ -1,21 +1,18 @@
-<footer class="site-footer">
-  <div class="row fullwidth">
-    <div class="large-6 columns">
-      <p>&copy; {{ site.time | date: '%Y' }} <a href="{{ '/' | relative_url }}">{{ site.title }}</a>. All rights reserved.
-        | <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
-        / <a href="{{ '/sitemap.xml' | relative_url }}">XML Sitemap</a>
-        | <a href="{{ '/about/privacy/' | relative_url }}">Privacy Policy</a></p>
-    </div>
-    <div class="large-6 columns text-right">
-      <p>
+<footer class="box" data-surface="raised">
+  <div class="center">
+    <div class="cluster" data-justify="between" data-gap="sm">
+      <small>&copy; {{ site.time | date: '%Y' }} <a href="{{ '/' | relative_url }}">{{ site.title }}</a>.
+        <a href="{{ '/feed.xml' | relative_url }}">RSS</a> &middot;
+        <a href="{{ '/sitemap.xml' | relative_url }}">Sitemap</a> &middot;
+        <a href="{{ '/about/privacy/' | relative_url }}">Privacy</a></small>
+      <small>
         {%- if site.github_username and site.github_username != "" %}
-        <a href="https://github.com/{{ site.github_username }}"><i class="fa fa-github"></i> GitHub</a>
+        <a href="https://github.com/{{ site.github_username }}">GitHub</a> &middot;
         {%- endif %}
         {%- if site.twitter_username and site.twitter_username != "" %}
-        &middot; <a href="https://x.com/{{ site.twitter_username }}"><i class="fa fa-twitter"></i> @{{ site.twitter_username }}</a>
+        <a href="https://x.com/{{ site.twitter_username }}">@{{ site.twitter_username }}</a> &middot;
         {%- endif %}
-        &middot; Built with <a href="https://jekyllrb.com/">Jekyll</a> and <a href="https://get.foundation/sites/docs-v5/">Foundation 5</a>.
-      </p>
+        Built with <a href="https://jekyllrb.com/">Jekyll</a> and <a href="https://foundationcss.com/yeti/">Yeti</a></small>
     </div>
   </div>
 </footer>

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="no-js" lang="{{ page.lang | default: site.lang | default: 'en' }}">
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
   {% include head.html %}
-  <body class="layout-{{ page.layout | default: 'page' }}">
-    {% include header.html %}
+  <body class="shell" data-gap="xl">
+    <a href="#content">Skip to content</a>
+    {% include nav-main.html %}
 
-    {{ content }}
+    <main id="content" class="stack" data-gap="2xl">
+      {{ content }}
+    </main>
 
     {% include footer.html %}
-    {% include scripts-footer.html %}
   </body>
 </html>

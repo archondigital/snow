@@ -1,6 +1,8 @@
 # Snow
 
-A responsive Jekyll starter theme built on [Foundation 5](https://get.foundation/sites/docs-v5/).
+A responsive Jekyll starter theme built on [Yeti](https://foundationcss.com/yeti/), the native-first successor to Foundation for Sites.
+
+> **Yeti is in alpha** (`7.0.0-alpha.2` is vendored). Class names, attributes and tokens can still change before its first beta.
 
 All sample content is [Beki Ipsum](https://bekiipsum.com) dummy text, and images come from
 [Lorem Picsum](https://picsum.photos) and [placehold.co](https://placehold.co). Replace the files in
@@ -74,14 +76,27 @@ permalink: /topic/travel/
 ---
 ```
 
-## Styles
+## Styles and scripts
 
-`assets/css/app.css` is the compiled Foundation build and works as-is; site styles live in
-`assets/css/style.css`. To rebuild Foundation after editing `_scss/_settings.scss`:
+No build step. Snow loads three files:
+
+- `assets/vendor/yeti/yeti.min.css` and `yeti.min.js`: Yeti, vendored as-is with its licence and `llms.txt`.
+- `assets/css/snow.css`: the theme. Brand hue, fonts and spacing are `--yeti-*` tokens on `:root`; change those before writing rules.
+- `assets/js/snow.js`: the gallery lightbox, on Yeti's native `dialog`. Without JavaScript, gallery links open the full image.
+
+Markup uses Yeti's layouts (`shell`, `center`, `stack`, `sidebar`, `grid`, `cover`, `frame`) and components (`nav`, `card`, `badge`, `pagination`, `dialog`, `field`). The reference is `assets/vendor/yeti/llms.txt` or [foundationcss.com/yeti](https://foundationcss.com/yeti/).
+
+To update Yeti, replace the files in `assets/vendor/yeti/` with the ones from a newer release (`npm pack @foundation/yeti@next`, then copy `dist/yeti.min.*`, `dist/llms.txt` and `LICENSE`).
+
+To check your pages against Yeti's attribute rules, build the site and run Yeti's validator from a clone of [foundation/yeti](https://github.com/foundation/yeti):
 
 ```bash
-npx sass --no-source-map --load-path=_scss _scss/app.scss assets/css/app.css
+node bin/validate-html.js /path/to/snow/_site --manifest dist/yeti.manifest.json
 ```
+
+## Licences
+
+Snow's own code is yours to reuse. Yeti is under the [Functional Source License 1.1, MIT future](assets/vendor/yeti/LICENSE): free to use for any site, but not to offer as a competing framework; each release becomes MIT two years after it ships.
 
 ## Deploying to GitHub Pages
 

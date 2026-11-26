@@ -1,22 +1,13 @@
 {%- comment -%}
-  Large featured image followed by the rest of `page.gallery_content`, wired to
-  Foundation Clearing (lightbox). Optional: img_class="extra-wide".
+  The featured image at full width, opening the post's lightbox gallery.
+  Usage: {% include gallery-feature.html %}
 {%- endcomment -%}
 {%- capture featured_src -%}{% include img-src.html src=page.featured_image %}{%- endcapture -%}
-{%- assign featured_caption = page.excerpt | default: page.title | strip_html | strip | escape -%}
-<ul class="clearing-thumbs clearing-feature" data-clearing>
-  <li class="clearing-featured-img">
-    <a href="{{ featured_src }}">
-      <img{% if include.img_class %} class="{{ include.img_class }}"{% endif %} src="{{ featured_src }}" alt="{{ page.title | escape }}" data-caption="{{ featured_caption }}">
-    </a>
-    {%- if include.hint %}
-    <br><small class="caption">Click on image to view{% if page.gallery_content %} gallery{% endif %}.</small>
-    {%- endif %}
-  </li>
-  {%- for pic in page.gallery_content %}
-  {%- capture pic_src -%}{% include img-src.html src=pic.url %}{%- endcapture %}
-  <li>
-    <a href="{{ pic_src }}"><img src="{{ pic_src }}" alt="{{ pic.label | escape }}" data-caption="{{ pic.label | escape }}. {{ pic.caption | escape }}" loading="lazy"></a>
-  </li>
-  {%- endfor %}
-</ul>
+<figure>
+  <a href="{{ featured_src }}" data-gallery="post" data-caption="{{ page.excerpt | default: page.title | strip_html | strip | escape }}">
+    <img src="{{ featured_src }}" alt="{{ page.title | escape }}">
+  </a>
+  {%- if include.hint %}
+  <figcaption>Select the image to view{% if page.gallery_content %} the gallery{% endif %}.</figcaption>
+  {%- endif %}
+</figure>

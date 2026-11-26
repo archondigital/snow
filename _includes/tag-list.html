@@ -1,0 +1,18 @@
+{%- comment -%}
+  Tags as badges. Usage: {% include tag-list.html tags=page.tags %};
+  without `tags`, every tag on the site, alphabetically.
+{%- endcomment -%}
+{%- if include.tags -%}
+  {%- assign tag_names = include.tags -%}
+{%- else -%}
+  {%- capture tag_list -%}{%- for tag in site.tags -%}{{ tag[0] }}|{%- endfor -%}{%- endcapture -%}
+  {%- assign tag_names = tag_list | split: "|" | sort_natural -%}
+{%- endif -%}
+{%- if tag_names.size > 0 -%}
+<ul class="cluster" data-justify="start" data-gap="xs" role="list">
+  {%- for tag_name in tag_names %}
+  {%- assign tag_slug = tag_name | slugify %}
+  <li><a class="badge" data-variant="neutral" href="{{ '/topic/' | append: tag_slug | append: '/' | relative_url }}">{{ tag_name }}</a></li>
+  {%- endfor %}
+</ul>
+{%- endif -%}
